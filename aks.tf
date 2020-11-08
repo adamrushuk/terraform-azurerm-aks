@@ -1,4 +1,9 @@
 # AKS
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.name
   location            = var.location
@@ -21,6 +26,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_taints         = local.default_node_pool.node_taints
     # TODO: add custom vnet support
     # vnet_subnet_id      = local.default_node_pool.vnet_subnet_id
+  }
+
+  linux_profile {
+    admin_username = var.admin_username
+
+    ssh_key {
+      key_data = chomp(
+        coalesce(
+          var.admin_ssh_public_key,
+          tls_private_key.ssh.public_key_openssh,
+        )
+      )
+    }
   }
 
   # managed identity block: https://www.terraform.io/docs/providers/azurerm/r/kubernetes_cluster.html#type-1

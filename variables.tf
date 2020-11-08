@@ -4,7 +4,7 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  description = "AKS resource group name"
+  description = "Existing AKS resource group name"
   type        = string
 }
 
@@ -34,6 +34,17 @@ variable "tags" {
   default = {
     Source = "terraform"
   }
+}
+
+variable "admin_username" {
+  description = "The admin username of the node VMs that will be deployed"
+  default     = "sysadmin"
+}
+
+# Use "cat ~/.ssh/id_rsa.pub"
+variable "admin_ssh_public_key" {
+  description = "Public key for SSH access to the node VMs"
+  default     = ""
 }
 
 variable "default_node_pool" {
