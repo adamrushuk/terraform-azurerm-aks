@@ -1,4 +1,3 @@
-
 locals {
   # TODO: consider moving defaults to object var, as per: https://binx.io/blog/2020/01/02/module-parameter-defaults-with-the-terraform-object-type/
   default_agent_profile = {

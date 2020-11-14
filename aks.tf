@@ -4,6 +4,14 @@ resource "tls_private_key" "ssh" {
   rsa_bits  = 4096
 }
 
+# NOTE: Requires "Azure Active Directory Graph" "Directory.ReadWrite.All" Application API permission
+resource "azuread_group" "aks_admins" {
+  count = var.aad_auth_enabled ? 1 : 0
+
+  name        = "${var.name}-aks-administrators"
+  description = "${var.name} Kubernetes cluster administrators"
+}
+
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.name
   location            = var.location
@@ -49,13 +57,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
   role_based_access_control {
     enabled = true
 
-    # TODO: Enable AAD auth: https://app.zenhub.com/workspaces/aks-nexus-velero-5e602702ee332f0fc76d35dd/issues/adamrushuk/aks-nexus-velero/105
-    # azure_active_directory {
-    #   managed = true
-    #   admin_group_object_ids = [
-    #     data.azuread_group.aks.id
-    #   ]
-    # }
+    # conditional dynamic block
+    dynamic "azure_active_directory" {
+      for_each = var.aad_auth_enabled ? [1] : []
+      content {
+        managed = true
+        admin_group_object_ids = [
+          azuread_group.aks_admins[0].id
+        ]
+      }
+    }
   }
 
   addon_profile {

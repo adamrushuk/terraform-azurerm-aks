@@ -1,6 +1,6 @@
 # Test AKS module
 provider "azurerm" {
-  version = "2.35.0"
+  version = "2.36.0"
   features {}
 }
 
@@ -34,6 +34,7 @@ module "aks" {
   location            = azurerm_resource_group.aks.location
   resource_group_name = azurerm_resource_group.aks.name
   name                = local.name
+  aad_auth_enabled    = true
   tags                = local.tags
 
   # override defaults
