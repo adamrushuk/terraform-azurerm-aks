@@ -22,13 +22,6 @@ variable "kubernetes_version" {
   default     = "1.16.15"
 }
 
-# http://man.hubwiz.com/docset/Terraform.docset/Contents/Resources/Documents/docs/providers/azurerm/r/kubernetes_cluster.html#azure_active_directory
-variable "aad_auth_enabled" {
-  description = "Should AAD authentication be enabled"
-  type        = bool
-  default     = true
-}
-
 variable "sla_sku" {
   description = "Defines the SLA under which the managed master control plane of AKS is running"
   type        = string
@@ -79,4 +72,20 @@ EOD
 
   type    = map(any)
   default = {}
+}
+
+
+# ADD-ONS
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#azure_active_directory
+# https://docs.microsoft.com/en-us/azure/aks/azure-ad-rbac
+variable "aad_auth_enabled" {
+  description = "Should AAD authentication be enabled"
+  type        = bool
+  default     = true
+}
+
+variable "log_analytics_workspace_id" {
+  description = "The ID of the Log Analytics Workspace which the OMS Agent should send data to"
+  type        = string
+  default     = ""
 }

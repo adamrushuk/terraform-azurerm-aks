@@ -12,6 +12,7 @@ resource "azuread_group" "aks_admins" {
   description = "${var.name} Kubernetes cluster administrators"
 }
 
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.name
   location            = var.location
@@ -54,6 +55,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 
+  # https://docs.microsoft.com/en-us/azure/aks/azure-ad-rbac
   role_based_access_control {
     enabled = true
 
@@ -70,16 +72,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   addon_profile {
+    # https://docs.microsoft.com/en-ie/azure/governance/policy/concepts/policy-for-kubernetes
+    azure_policy { enabled = true }
+
     # cannot remove this deprecated block yet, due to this issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/7716
     kube_dashboard {
       enabled = false
     }
 
-    # oms_agent {
-    #   enabled                    = var.aks_container_insights_enabled
-    #   log_analytics_workspace_id = var.aks_container_insights_enabled ? azurerm_log_analytics_workspace.aks[0].id : null
-    # }
+    oms_agent {
+      enabled                    = var.log_analytics_workspace_id != "" ? true : false
+      log_analytics_workspace_id = var.log_analytics_workspace_id != "" ? var.log_analytics_workspace_id : null
+    }
   }
 
   tags = var.tags
