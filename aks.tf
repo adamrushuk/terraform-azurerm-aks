@@ -4,7 +4,10 @@ resource "tls_private_key" "ssh" {
   rsa_bits  = 4096
 }
 
-# NOTE: Requires "Azure Active Directory Graph" "Directory.ReadWrite.All" Application API permission
+# NOTE: Requires "Azure Active Directory Graph" "Directory.ReadWrite.All" Application API permission to create, and
+# also requires "User Access Administrator" role to delete
+# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group
+# ! You can assign one of the required Azure Active Directory Roles with the AzureAD PowerShell Module
 resource "azuread_group" "aks_admins" {
   count = var.aad_auth_enabled ? 1 : 0
 
@@ -85,6 +88,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
       enabled                    = var.log_analytics_workspace_id != "" ? true : false
       log_analytics_workspace_id = var.log_analytics_workspace_id != "" ? var.log_analytics_workspace_id : null
     }
+  }
+
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#network_plugin
+  network_profile {
+    load_balancer_sku  = "Standard"
+    outbound_type      = "loadBalancer"
+    network_plugin     = "azure"
+    network_policy     = "azure"
+    service_cidr       = "10.0.0.0/16"
+    dns_service_ip     = "10.0.0.10"
+    docker_bridge_cidr = "172.17.0.1/16"
   }
 
   tags = var.tags
