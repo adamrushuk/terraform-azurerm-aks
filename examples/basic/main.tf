@@ -33,7 +33,6 @@ resource "azurerm_resource_group" "aks" {
 
 module "aks" {
   source  = "adamrushuk/aks/azurerm"
-  version = "0.4.0"
 
   kubernetes_version  = local.kubernetes_version
   location            = azurerm_resource_group.aks.location
