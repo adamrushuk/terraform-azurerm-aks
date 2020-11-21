@@ -16,11 +16,8 @@ cd test
 # Init
 terraform init
 
-# Plan
-terraform plan -out=tfplan
-
 # Apply
-terraform apply tfplan
+terraform apply
 
 # Outputs
 terraform output

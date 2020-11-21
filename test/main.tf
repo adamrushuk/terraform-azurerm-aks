@@ -30,12 +30,13 @@ resource "azurerm_resource_group" "aks" {
 module "aks" {
   source = "../"
 
-  kubernetes_version  = local.kubernetes_version
-  location            = azurerm_resource_group.aks.location
-  resource_group_name = azurerm_resource_group.aks.name
-  name                = local.name
-  aad_auth_enabled    = true
-  tags                = local.tags
+  kubernetes_version   = local.kubernetes_version
+  location             = azurerm_resource_group.aks.location
+  resource_group_name  = azurerm_resource_group.aks.name
+  name                 = local.name
+  aad_auth_enabled     = true
+  azure_policy_enabled = false
+  tags                 = local.tags
 
   # override defaults
   default_node_pool = {

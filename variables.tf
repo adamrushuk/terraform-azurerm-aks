@@ -84,6 +84,14 @@ variable "aad_auth_enabled" {
   default     = true
 }
 
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#azure_policy
+# https://docs.microsoft.com/en-ie/azure/governance/policy/concepts/policy-for-kubernetes
+variable "azure_policy_enabled" {
+  description = "Should Azure Policy be enabled"
+  type        = bool
+  default     = false
+}
+
 variable "log_analytics_workspace_id" {
   description = "The ID of the Log Analytics Workspace which the OMS Agent should send data to"
   type        = string
