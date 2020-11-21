@@ -1,6 +1,6 @@
 # Test AKS module
 provider "azurerm" {
-  version = "2.36.0"
+  version = "2.37.0"
   features {}
 }
 
