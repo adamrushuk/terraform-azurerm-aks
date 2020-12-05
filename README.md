@@ -1,5 +1,7 @@
 # terraform-azurerm-aks
 
+[![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/adamrushuk/aks/azurerm/)
+
 An Azure Kubernetes Service (AKS) [Terraform module](https://registry.terraform.io/modules/adamrushuk/aks/azurerm/latest).
 
 ## Used resources

@@ -10,6 +10,9 @@
 ## Apply
 
 ```bash
+# Login
+az login
+
 # Navigate into test folder
 cd test
 
