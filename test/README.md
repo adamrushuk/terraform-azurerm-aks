@@ -18,6 +18,10 @@ cd test
 
 # Init
 terraform init
+terraform validate
+
+# Plan
+terraform plan
 
 # Apply
 terraform apply
