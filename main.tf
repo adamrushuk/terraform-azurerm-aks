@@ -27,7 +27,7 @@ locals {
     orchestrator_version = var.kubernetes_version
     vm_size              = "Standard_D2s_v3"
     os_type              = "Linux"
-    availability_zones   = [1, 2, 3]
+    availability_zones   = null
     enable_auto_scaling  = false
     min_count            = null
     max_count            = null
