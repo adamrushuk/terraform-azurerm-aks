@@ -1,6 +1,6 @@
 # Test AKS module
 provider "azurerm" {
-  version = "2.37.0"
+  version = "2.44.0"
   features {}
 }
 
@@ -43,4 +43,7 @@ module "aks" {
     count    = 1
     max_pods = 99
   }
+
+  # Add existing "AKS-Admins" group to the new AKS cluster admin group
+  aks_admin_group_member_name = "AKS-Admins"
 }

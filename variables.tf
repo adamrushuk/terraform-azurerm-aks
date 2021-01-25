@@ -13,6 +13,11 @@ variable "name" {
   type        = string
 }
 
+variable "aks_admin_group_member_name" {
+  description = "Existing AAD group name to add as a member to the <AKS_CLUSTER_NAME>-aks-administrators group"
+  type        = string
+}
+
 # version used for both main AKS API service, and default node pool
 # https://github.com/Azure/AKS/releases
 # az aks get-versions --location uksouth --output table
