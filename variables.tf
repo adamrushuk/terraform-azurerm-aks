@@ -24,7 +24,7 @@ variable "aks_admin_group_member_name" {
 variable "kubernetes_version" {
   description = "Version for both main AKS API service, and default node pool"
   type        = string
-  default     = "1.16.15"
+  default     = "1.17.16"
 }
 
 variable "sla_sku" {

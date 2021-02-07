@@ -1,6 +1,6 @@
 # Test AKS module
 provider "azurerm" {
-  version = "2.44.0"
+  version = "2.46.1"
   features {}
 }
 
@@ -8,7 +8,7 @@ locals {
   # version used for both main AKS API service, and default node pool
   # https://github.com/Azure/AKS/releases
   # az aks get-versions --location uksouth --output table
-  kubernetes_version  = "1.16.15"
+  kubernetes_version  = "1.17.16"
   prefix              = "rush"
   location            = "uksouth"
   resource_group_name = "${local.prefix}-rg-azurerm-kubernetes-cluster"
