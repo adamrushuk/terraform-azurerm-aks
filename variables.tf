@@ -33,6 +33,12 @@ variable "sla_sku" {
   default     = "Free"
 }
 
+variable "load_balancer_sku" {
+  description = "Specifies the SKU of the Load Balancer used for this Kubernetes Cluster"
+  type        = string
+  default     = "Basic"
+}
+
 variable "tags" {
   description = "A map of the tags to use on the resources"
   type        = map(string)
@@ -57,20 +63,20 @@ variable "default_node_pool" {
 Default node pool configuration. Overrides/merges with locals.default_agent_profile:
 ```
 map(object({
-    name                  = string
-    count                 = number
-    vm_size               = string
-    os_type               = string
-    availability_zones    = list(number)
-    enable_auto_scaling   = bool
-    min_count             = number
-    max_count             = number
-    type                  = string
-    node_taints           = list(string)
-    vnet_subnet_id        = string
-    max_pods              = number
-    os_disk_size_gb       = number
-    enable_node_public_ip = bool
+  name                  = string
+  count                 = number
+  vm_size               = string
+  os_type               = string
+  availability_zones    = list(number)
+  enable_auto_scaling   = bool
+  min_count             = number
+  max_count             = number
+  type                  = string
+  node_taints           = list(string)
+  vnet_subnet_id        = string
+  max_pods              = number
+  os_disk_size_gb       = number
+  enable_node_public_ip = bool
 }))
 ```
 EOD

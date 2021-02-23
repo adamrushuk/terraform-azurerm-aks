@@ -140,7 +140,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#network_plugin
   network_profile {
-    load_balancer_sku  = "Standard"
+    load_balancer_sku  = var.load_balancer_sku
     outbound_type      = "loadBalancer"
     network_plugin     = "azure"
     network_policy     = "azure"
@@ -155,9 +155,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
 # Add role to access AKS Resource View
 # https://docs.microsoft.com/en-us/azure/aks/kubernetes-portal
 resource "azurerm_role_assignment" "aks_portal_resource_view" {
-  principal_id                     = azuread_group.aks_admins[0].id
-  role_definition_name             = "Azure Kubernetes Service RBAC Cluster Admin"
-  scope                            = azurerm_kubernetes_cluster.aks.id
+  principal_id         = azuread_group.aks_admins[0].id
+  role_definition_name = "Azure Kubernetes Service RBAC Cluster Admin"
+  scope                = azurerm_kubernetes_cluster.aks.id
 }
 
 
