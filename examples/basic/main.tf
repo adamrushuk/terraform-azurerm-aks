@@ -13,7 +13,7 @@ locals {
   # version used for both main AKS API service, and default node pool
   # https://github.com/Azure/AKS/releases
   # az aks get-versions --location uksouth --output table
-  kubernetes_version  = "1.17.16"
+  kubernetes_version  = "1.18.14"
   location            = "uksouth"
   resource_group_name = "${random_string.aks.result}-rg-azurerm-kubernetes-cluster"
   name                = "${random_string.aks.result}-aks-cluster"

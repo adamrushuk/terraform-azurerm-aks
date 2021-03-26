@@ -20,10 +20,7 @@ cd test
 terraform init
 terraform validate
 
-# Plan
-terraform plan
-
-# Apply
+# Plan / Apply
 terraform apply
 
 # Outputs
