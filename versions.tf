@@ -9,27 +9,23 @@ terraform {
     # https://github.com/terraform-providers/terraform-provider-azurerm/releases
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.0"
+      version = ">= 2.0"
     }
 
     # https://github.com/terraform-providers/terraform-provider-azuread/releases
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 1.0"
+      version = ">= 1.0"
     }
 
     random = {
       source  = "hashicorp/random"
-      version = "~> 2.0"
+      version = ">= 2.0"
     }
 
     tls = {
       source  = "hashicorp/tls"
-      version = "~> 2.0"
+      version = ">= 2.0"
     }
   }
-}
-
-provider "azurerm" {
-  features {}
 }
