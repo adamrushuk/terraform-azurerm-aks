@@ -14,7 +14,7 @@ The main resources used are:
 ## Prereqs
 
 This example was developed using Terraform version `0.13`.
-It may not work out-of-the-box using other versions.
+It may not work out-of-the-box using older versions.
 
 This example expects you already have
 [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli).
