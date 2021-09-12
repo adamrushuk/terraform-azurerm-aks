@@ -1,5 +1,16 @@
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    # https://github.com/terraform-providers/terraform-provider-azurerm/releases
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.76.0"
+    }
+  }
+}
+
 provider "azurerm" {
-  version = "2.46.1"
   features {}
 }
 
@@ -13,7 +24,7 @@ locals {
   # version used for both main AKS API service, and default node pool
   # https://github.com/Azure/AKS/releases
   # az aks get-versions --location uksouth --output table
-  kubernetes_version  = "1.20.7"
+  kubernetes_version  = "1.20.9"
   location            = "uksouth"
   resource_group_name = "${random_string.aks.result}-rg-azurerm-kubernetes-cluster"
   name                = "${random_string.aks.result}-aks-cluster"

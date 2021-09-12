@@ -15,7 +15,7 @@ terraform {
     # https://github.com/terraform-providers/terraform-provider-azuread/releases
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">= 1.0"
+      version = ">= 2.0"
     }
 
     random = {

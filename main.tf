@@ -33,11 +33,11 @@ resource "tls_private_key" "ssh" {
 # ! You can assign one of the required Azure Active Directory Roles with the AzureAD PowerShell Module
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group
 resource "azuread_group" "aks_admins" {
-  count = var.aad_auth_enabled ? 1 : 0
-
+  count                   = var.aad_auth_enabled ? 1 : 0
   display_name            = "${var.name}-aks-administrators"
   description             = "${var.name} Kubernetes cluster administrators"
   prevent_duplicate_names = true
+  security_enabled        = true
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
@@ -142,14 +142,13 @@ resource "azurerm_role_assignment" "aks_portal_resource_view" {
 
 # Add existing AAD group as a member to the <AKS_CLUSTER_NAME>-aks-administrators group
 data "azuread_group" "existing_aks_admins" {
-  count = var.aks_admin_group_member_name != "" ? 1 : 0
-
-  display_name = var.aks_admin_group_member_name
+  count            = var.aks_admin_group_member_name != "" ? 1 : 0
+  display_name     = var.aks_admin_group_member_name
+  security_enabled = true
 }
 
 resource "azuread_group_member" "existing_aks_admins" {
-  count = var.aks_admin_group_member_name != "" ? 1 : 0
-
+  count            = var.aks_admin_group_member_name != "" ? 1 : 0
   group_object_id  = azuread_group.aks_admins[0].id
   member_object_id = data.azuread_group.existing_aks_admins[0].id
 }
