@@ -50,17 +50,18 @@ resource "azurerm_kubernetes_cluster" "aks" {
   sku_tier            = var.sla_sku
 
   default_node_pool {
-    name                = local.default_node_pool.name
-    node_count          = local.default_node_pool.count
-    vm_size             = local.default_node_pool.vm_size
-    availability_zones  = local.default_node_pool.availability_zones
-    enable_auto_scaling = local.default_node_pool.enable_auto_scaling
-    min_count           = local.default_node_pool.min_count
-    max_count           = local.default_node_pool.max_count
-    max_pods            = local.default_node_pool.max_pods
-    os_disk_size_gb     = local.default_node_pool.os_disk_size_gb
-    type                = local.default_node_pool.type
-    node_taints         = local.default_node_pool.node_taints
+    name                 = local.default_node_pool.name
+    orchestrator_version = local.default_node_pool.orchestrator_version
+    vm_size              = local.default_node_pool.vm_size
+    node_count           = local.default_node_pool.count
+    availability_zones   = local.default_node_pool.availability_zones
+    enable_auto_scaling  = local.default_node_pool.enable_auto_scaling
+    min_count            = local.default_node_pool.min_count
+    max_count            = local.default_node_pool.max_count
+    max_pods             = local.default_node_pool.max_pods
+    os_disk_size_gb      = local.default_node_pool.os_disk_size_gb
+    type                 = local.default_node_pool.type
+    node_taints          = local.default_node_pool.node_taints
     # TODO: add custom vnet support
     # vnet_subnet_id      = local.default_node_pool.vnet_subnet_id
   }
@@ -103,12 +104,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     # https://docs.microsoft.com/en-ie/azure/governance/policy/concepts/policy-for-kubernetes
     azure_policy {
       enabled = var.azure_policy_enabled
-    }
-
-    # cannot remove this deprecated block yet, due to this issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/7716
-    kube_dashboard {
-      enabled = false
     }
 
     oms_agent {

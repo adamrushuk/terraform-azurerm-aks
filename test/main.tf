@@ -35,8 +35,9 @@ module "aks" {
 
   # override defaults
   default_node_pool = {
-    count    = 1
-    max_pods = 99
+    count                = 1
+    max_pods             = 99
+    orchestrator_version = local.kubernetes_version
   }
 
   # Add existing "AKS-Admins" group to the new AKS cluster admin group
