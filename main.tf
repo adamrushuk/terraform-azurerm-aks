@@ -106,13 +106,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
       enabled = var.azure_policy_enabled
     }
 
-    # TODO: remove this section?
-    # cannot remove this deprecated block yet, due to this issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/7716
-    # kube_dashboard {
-    #   enabled = false
-    # }
-
     oms_agent {
       enabled                    = var.log_analytics_workspace_id != "" ? true : false
       log_analytics_workspace_id = var.log_analytics_workspace_id != "" ? var.log_analytics_workspace_id : null
