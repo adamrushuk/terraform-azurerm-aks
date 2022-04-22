@@ -5,6 +5,7 @@ terraform.tfvars
 *.tfstate
 *.tfstate.backup
 tfplan
+.terraform.lock.hcl
 
 # Module directory
 .terraform/
