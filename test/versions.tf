@@ -5,7 +5,12 @@ terraform {
     # https://github.com/terraform-providers/terraform-provider-azurerm/releases
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.78.0"
+      version = "~> 3.3.0"
+    }
+    # https://github.com/terraform-providers/terraform-provider-azuread/releases
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.21.0"
     }
   }
 }

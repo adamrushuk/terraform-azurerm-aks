@@ -24,7 +24,7 @@ variable "aks_admin_group_member_name" {
 variable "kubernetes_version" {
   description = "Version for both main AKS API service, and default node pool"
   type        = string
-  default     = "1.20.9"
+  default     = "1.21.9"
 }
 
 variable "sla_sku" {
@@ -36,7 +36,7 @@ variable "sla_sku" {
 variable "load_balancer_sku" {
   description = "Specifies the SKU of the Load Balancer used for this Kubernetes Cluster"
   type        = string
-  default     = "Basic"
+  default     = "basic"
 }
 
 variable "tags" {
@@ -67,7 +67,6 @@ map(object({
   count                 = number
   vm_size               = string
   os_type               = string
-  availability_zones    = list(number)
   enable_auto_scaling   = bool
   min_count             = number
   max_count             = number

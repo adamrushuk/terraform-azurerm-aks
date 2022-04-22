@@ -6,7 +6,6 @@ locals {
     orchestrator_version = var.kubernetes_version
     vm_size              = "Standard_D2s_v3"
     os_type              = "Linux"
-    availability_zones   = null
     enable_auto_scaling  = false
     min_count            = null
     max_count            = null
@@ -54,7 +53,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     orchestrator_version = local.default_node_pool.orchestrator_version
     vm_size              = local.default_node_pool.vm_size
     node_count           = local.default_node_pool.count
-    availability_zones   = local.default_node_pool.availability_zones
     enable_auto_scaling  = local.default_node_pool.enable_auto_scaling
     min_count            = local.default_node_pool.min_count
     max_count            = local.default_node_pool.max_count
@@ -79,36 +77,33 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  # managed identity block: https://www.terraform.io/docs/providers/azurerm/r/kubernetes_cluster.html#type-1
+  # managed identity block
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#identity
   identity {
     type = "SystemAssigned"
   }
 
   # https://docs.microsoft.com/en-us/azure/aks/azure-ad-rbac
-  role_based_access_control {
-    enabled = true
-
-    # conditional dynamic block
-    dynamic "azure_active_directory" {
-      for_each = var.aad_auth_enabled ? [1] : []
-      content {
-        managed = true
-        admin_group_object_ids = [
-          azuread_group.aks_admins[0].id
-        ]
-      }
+  # conditional dynamic block
+  dynamic "azure_active_directory_role_based_access_control" {
+    for_each = var.aad_auth_enabled ? [1] : []
+    content {
+      managed = true
+      admin_group_object_ids = [
+        azuread_group.aks_admins[0].id
+      ]
     }
   }
 
-  addon_profile {
-    # https://docs.microsoft.com/en-ie/azure/governance/policy/concepts/policy-for-kubernetes
-    azure_policy {
-      enabled = var.azure_policy_enabled
-    }
+  # https://docs.microsoft.com/en-ie/azure/governance/policy/concepts/policy-for-kubernetes
+  azure_policy_enabled = var.azure_policy_enabled
 
-    oms_agent {
-      enabled                    = var.log_analytics_workspace_id != "" ? true : false
-      log_analytics_workspace_id = var.log_analytics_workspace_id != "" ? var.log_analytics_workspace_id : null
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#oms_agent
+  # conditional dynamic block
+  dynamic "oms_agent" {
+    for_each = var.log_analytics_workspace_id != "" ? [1] : []
+    content {
+      log_analytics_workspace_id = var.log_analytics_workspace_id
     }
   }
 

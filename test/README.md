@@ -37,7 +37,7 @@ cd test
 terraform destroy
 
 # Delete local TF state and plan
-rm -rf terraform.tfstate* tfplan
+rm -rf terraform.tfstate* tfplan .terraform.lock.hcl
 
 # [OPTIONAL] Delete provider binaries and git modules
 rm -rf .terraform
