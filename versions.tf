@@ -1,6 +1,6 @@
 terraform {
   # versioning syntax: https://www.terraform.io/docs/configuration/version-constraints.html#version-constraint-syntax
-  required_version = ">= 0.13"
+  required_version = ">= 1.0"
 
   # versioning syntax: https://www.terraform.io/docs/configuration/modules.html#module-versions
   # ~> 1.0 = 1.x
