@@ -41,12 +41,14 @@ resource "azuread_group" "aks_admins" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  dns_prefix          = var.name
-  kubernetes_version  = var.kubernetes_version
-  sku_tier            = var.sla_sku
+  name                              = var.name
+  location                          = var.location
+  resource_group_name               = var.resource_group_name
+  dns_prefix                        = var.name
+  kubernetes_version                = var.kubernetes_version
+  sku_tier                          = var.sla_sku
+  role_based_access_control_enabled = var.role_based_access_control_enabled
+  tags                              = var.tags
 
   default_node_pool {
     name                 = local.default_node_pool.name
@@ -117,8 +119,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dns_service_ip     = "10.0.0.10"
     docker_bridge_cidr = "172.17.0.1/16"
   }
-
-  tags = var.tags
 }
 
 # Add role to access AKS Resource View

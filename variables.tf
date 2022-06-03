@@ -99,7 +99,13 @@ variable "aad_auth_enabled" {
 variable "azure_policy_enabled" {
   description = "Should Azure Policy be enabled"
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "role_based_access_control_enabled" {
+  description = "(Optional) - Whether Role Based Access Control for the Kubernetes Cluster should be enabled."
+  type        = bool
+  default     = true
 }
 
 variable "log_analytics_workspace_id" {
